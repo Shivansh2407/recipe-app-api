@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.test import TestCase
 
-from rest_framework import test
+from rest_framework import status
 from rest_framework.test import APIClient
 
 from core.models import Recipe
@@ -20,7 +20,7 @@ def sample_recipe(user, **params):
         'time_minutes': 10,
         'price': 5.00
     }
-    defaults.updates(params)
+    defaults.update(params)
 
     return Recipe.objects.create(user=user, **defaults)
 
@@ -57,7 +57,7 @@ class PrivateRecipeApiTests(TestCase):
         res = self.client.get(RECIPES_URL)
 
         recipes = Recipe.objects.all().order_by('-id')
-        serializer = RecipeSerializer(recipe, many=True)
+        serializer = RecipeSerializer(recipes, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
 
