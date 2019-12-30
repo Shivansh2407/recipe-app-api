@@ -72,4 +72,4 @@ class ModelTests(TestCase):
             price=5.00
         )
 
-        self.assertEqual(str(recipe), recipe.name)
+        self.assertEqual(str(recipe), recipe.title)
